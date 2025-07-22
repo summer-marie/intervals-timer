@@ -4,6 +4,7 @@ import './App.css'
 function App() {
   // State for user selections
   const [roundDuration, setRoundDuration] = useState(30)
+  const [roundCount, setRoundCount] = useState(1)
   const [sets, setSets] = useState(3)
   const [breakDuration, setBreakDuration] = useState(30)
   
@@ -11,6 +12,7 @@ function App() {
   const [isRunning, setIsRunning] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
   const [currentSet, setCurrentSet] = useState(1)
+  const [currentRound, setCurrentRound] = useState(1)
   const [timeLeft, setTimeLeft] = useState(0)
   const [isBreak, setIsBreak] = useState(false)
   const [isComplete, setIsComplete] = useState(false)
@@ -26,27 +28,30 @@ function App() {
     } else if (isRunning && !isPaused && timeLeft === 0) {
       // Handle round/break transitions
       if (isBreak) {
-        // Break is over, start next round
-        if (currentSet < sets) {
-          setCurrentSet(prev => prev + 1)
-          setTimeLeft(roundDuration)
-          setIsBreak(false)
-        } else {
-          // Workout complete
-          setIsRunning(false)
-          setIsComplete(true)
-        }
+        // Break is over, start next set
+        setCurrentSet(prev => prev + 1)
+        setCurrentRound(1)
+        setTimeLeft(roundDuration)
+        setIsBreak(false)
       } else {
-        // Round is over, start break or finish
-        if (currentSet < sets && breakDuration > 0) {
-          setTimeLeft(breakDuration)
-          setIsBreak(true)
-        } else if (currentSet < sets) {
-          // No break, go to next round
-          setCurrentSet(prev => prev + 1)
+        // Round is over
+        if (currentRound < roundCount) {
+          // More rounds in this set, continue to next round
+          setCurrentRound(prev => prev + 1)
           setTimeLeft(roundDuration)
+        } else if (currentSet < sets) {
+          // Set completed, check if we need a break between sets
+          if (breakDuration > 0) {
+            setTimeLeft(breakDuration)
+            setIsBreak(true)
+          } else {
+            // No break, go directly to next set
+            setCurrentSet(prev => prev + 1)
+            setCurrentRound(1)
+            setTimeLeft(roundDuration)
+          }
         } else {
-          // Workout complete
+          // Last set completed - workout complete
           setIsRunning(false)
           setIsComplete(true)
         }
@@ -54,12 +59,13 @@ function App() {
     }
 
     return () => clearInterval(interval)
-  }, [isRunning, isPaused, timeLeft, currentSet, sets, roundDuration, breakDuration, isBreak])
+  }, [isRunning, isPaused, timeLeft, currentSet, currentRound, sets, roundCount, roundDuration, breakDuration, isBreak])
 
   const startTimer = () => {
     setIsRunning(true)
     setIsPaused(false)
     setCurrentSet(1)
+    setCurrentRound(1)
     setTimeLeft(roundDuration)
     setIsBreak(false)
     setIsComplete(false)
@@ -77,6 +83,7 @@ function App() {
     setIsRunning(false)
     setIsPaused(false)
     setCurrentSet(1)
+    setCurrentRound(1)
     setTimeLeft(0)
     setIsBreak(false)
     setIsComplete(false)
@@ -98,21 +105,38 @@ function App() {
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 mb-6 max-w-md mx-auto">
             <h2 className="text-xl font-semibold text-white mb-4">Setup Your Workout</h2>
             
-            {/* Round Duration Dropdown */}
-            <div className="mb-4">
-              <label className="block text-white text-sm font-medium mb-2">
-                Round Duration
-              </label>
-              <select 
-                value={roundDuration} 
-                onChange={(e) => setRoundDuration(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-white rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value={10}>10 seconds</option>
-                <option value={15}>15 seconds</option>
-                <option value={30}>30 seconds</option>
-                <option value={60}>60 seconds</option>
-              </select>
+            {/* Round Count and Duration - Flex Layout */}
+            <div className="flex gap-4 mb-4">
+              <div className="flex-1">
+                <label className="block text-white text-sm font-medium mb-2">
+                  Round Count
+                </label>
+                <select 
+                  value={roundCount} 
+                  onChange={(e) => setRoundCount(Number(e.target.value))}
+                  className="w-full px-3 py-2 bg-white rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  {[1,2,3,4,5,6,7,8].map(num => (
+                    <option key={num} value={num}>{num} round{num > 1 ? 's' : ''}</option>
+                  ))}
+                </select>
+              </div>
+              
+              <div className="flex-1">
+                <label className="block text-white text-sm font-medium mb-2">
+                  Round Duration
+                </label>
+                <select 
+                  value={roundDuration} 
+                  onChange={(e) => setRoundDuration(Number(e.target.value))}
+                  className="w-full px-3 py-2 bg-white rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value={10}>10 seconds</option>
+                  <option value={15}>15 seconds</option>
+                  <option value={30}>30 seconds</option>
+                  <option value={60}>60 seconds</option>
+                </select>
+              </div>
             </div>
 
             {/* Sets Dropdown */}
@@ -165,6 +189,9 @@ function App() {
             <div className="text-white mb-8 text-center">
               <div className="text-4xl md:text-6xl font-bold mb-4">
                 Set {currentSet} of {sets}
+              </div>
+              <div className="text-2xl md:text-3xl font-medium mb-2">
+                Round {currentRound} of {roundCount}
               </div>
               <div className="text-2xl md:text-4xl opacity-75">
                 {isBreak ? 'Break Time' : 'Work Time'}
