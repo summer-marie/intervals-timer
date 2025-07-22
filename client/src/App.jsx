@@ -5,6 +5,7 @@ function App() {
   // State for user selections
   const [roundDuration, setRoundDuration] = useState(30)
   const [roundCount, setRoundCount] = useState(1)
+  const [roundBreakDuration, setRoundBreakDuration] = useState(0)
   const [sets, setSets] = useState(3)
   const [breakDuration, setBreakDuration] = useState(30)
   
@@ -15,6 +16,7 @@ function App() {
   const [currentRound, setCurrentRound] = useState(1)
   const [timeLeft, setTimeLeft] = useState(0)
   const [isBreak, setIsBreak] = useState(false)
+  const [isRoundBreak, setIsRoundBreak] = useState(false)
   const [isComplete, setIsComplete] = useState(false)
 
   // Timer effect
@@ -28,17 +30,30 @@ function App() {
     } else if (isRunning && !isPaused && timeLeft === 0) {
       // Handle round/break transitions
       if (isBreak) {
-        // Break is over, start next set
+        // Set break is over, start next set
         setCurrentSet(prev => prev + 1)
         setCurrentRound(1)
         setTimeLeft(roundDuration)
         setIsBreak(false)
+        setIsRoundBreak(false)
+      } else if (isRoundBreak) {
+        // Round break is over, continue to next round
+        setCurrentRound(prev => prev + 1)
+        setTimeLeft(roundDuration)
+        setIsRoundBreak(false)
       } else {
         // Round is over
         if (currentRound < roundCount) {
-          // More rounds in this set, continue to next round
-          setCurrentRound(prev => prev + 1)
-          setTimeLeft(roundDuration)
+          // More rounds in this set
+          if (roundBreakDuration > 0) {
+            // Break between rounds
+            setTimeLeft(roundBreakDuration)
+            setIsRoundBreak(true)
+          } else {
+            // No round break, continue to next round
+            setCurrentRound(prev => prev + 1)
+            setTimeLeft(roundDuration)
+          }
         } else {
           // Set completed - all rounds in this set are done
           if (currentSet < sets) {
@@ -62,7 +77,7 @@ function App() {
     }
 
     return () => clearInterval(interval)
-  }, [isRunning, isPaused, timeLeft, currentSet, currentRound, sets, roundCount, roundDuration, breakDuration, isBreak])
+  }, [isRunning, isPaused, timeLeft, currentSet, currentRound, sets, roundCount, roundDuration, roundBreakDuration, breakDuration, isBreak, isRoundBreak])
 
   const startTimer = () => {
     setIsRunning(true)
@@ -71,6 +86,7 @@ function App() {
     setCurrentRound(1)
     setTimeLeft(roundDuration)
     setIsBreak(false)
+    setIsRoundBreak(false)
     setIsComplete(false)
   }
 
@@ -89,6 +105,7 @@ function App() {
     setCurrentRound(1)
     setTimeLeft(0)
     setIsBreak(false)
+    setIsRoundBreak(false)
     setIsComplete(false)
   }
 
@@ -149,6 +166,26 @@ function App() {
               </div>
             </div>
 
+            {/* Break Between Rounds Dropdown */}
+            <div className="mb-4">
+              <label className="block text-white text-sm font-medium mb-2">
+                Break Between Rounds
+              </label>
+              <select 
+                value={roundBreakDuration} 
+                onChange={(e) => setRoundBreakDuration(Number(e.target.value))}
+                className="w-full px-3 py-2 bg-white rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value={0}>No break</option>
+                {Array.from({length: 11}, (_, i) => {
+                  const seconds = 10 + (i * 5);
+                  return (
+                    <option key={seconds} value={seconds}>{seconds} seconds</option>
+                  );
+                })}
+              </select>
+            </div>
+
             {/* Sets Dropdown */}
             <div className="mb-4">
               <label className="block text-white text-sm font-medium mb-2">
@@ -204,14 +241,14 @@ function App() {
                 Round {currentRound} of {roundCount}
               </div>
               <div className="text-2xl md:text-4xl opacity-75">
-                {isBreak ? 'Break Time' : 'Work Time'}
+                {isBreak ? 'Set Break' : isRoundBreak ? 'Round Break' : 'Work Time'}
                 {isPaused && ' - PAUSED'}
               </div>
             </div>
             
             <div className="text-center mb-8 flex-1 flex items-center justify-center">
               <div className={`text-[12rem] md:text-[18rem] lg:text-[24rem] font-bold leading-none ${
-                isBreak ? 'text-red-500' : 'text-white'
+                isBreak || isRoundBreak ? 'text-red-500' : 'text-white'
               }`}>
                 {formatTime(timeLeft)}
               </div>
