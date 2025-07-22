@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import BgOptions from './components/BgOptions'
 
 function App() {
   // State for user selections
@@ -8,6 +9,7 @@ function App() {
   const [roundBreakDuration, setRoundBreakDuration] = useState(0)
   const [sets, setSets] = useState(3)
   const [breakDuration, setBreakDuration] = useState(30)
+  const [currentBg, setCurrentBg] = useState('hero-pattern-topography')
   
   // Timer state
   const [isRunning, setIsRunning] = useState(false)
@@ -123,7 +125,8 @@ function App() {
   }
 
   return (
-    <div className="app hero-pattern-topography min-h-screen">
+    <div className={`app ${currentBg} min-h-screen`}>
+      <BgOptions currentBg={currentBg} onBgChange={setCurrentBg} />
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <h1 className="text-4xl font-bold text-white text-center mb-8">Intervals Timer</h1>
         
