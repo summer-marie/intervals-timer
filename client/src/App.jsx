@@ -39,21 +39,24 @@ function App() {
           // More rounds in this set, continue to next round
           setCurrentRound(prev => prev + 1)
           setTimeLeft(roundDuration)
-        } else if (currentSet < sets) {
-          // Set completed, check if we need a break between sets
-          if (breakDuration > 0) {
-            setTimeLeft(breakDuration)
-            setIsBreak(true)
-          } else {
-            // No break, go directly to next set
-            setCurrentSet(prev => prev + 1)
-            setCurrentRound(1)
-            setTimeLeft(roundDuration)
-          }
         } else {
-          // Last set completed - workout complete
-          setIsRunning(false)
-          setIsComplete(true)
+          // Set completed - all rounds in this set are done
+          if (currentSet < sets) {
+            // Not the last set - check if we need a break between sets
+            if (breakDuration > 0) {
+              setTimeLeft(breakDuration)
+              setIsBreak(true)
+            } else {
+              // No break, go directly to next set
+              setCurrentSet(prev => prev + 1)
+              setCurrentRound(1)
+              setTimeLeft(roundDuration)
+            }
+          } else {
+            // Last set completed - workout complete
+            setIsRunning(false)
+            setIsComplete(true)
+          }
         }
       }
     }
