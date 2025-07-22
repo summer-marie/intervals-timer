@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+/* Hero Patterns - Example with dots pattern */
+.hero-pattern-dots {
+  background-color: #f8fafc;
+  background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Hero Patterns - Example with topography pattern */
+.hero-pattern-topography {
+  background-color: #1a202c;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill='%23374151' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='m0 40l40-40h-40v40zm40 0v-40h-40l40 40z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
