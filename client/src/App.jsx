@@ -43,7 +43,7 @@ function App() {
         setIsRoundBreak(false)
       } else {
         // Round is over
-        if (currentRound < roundCount) {
+        if (currentRound < Number(roundCount || 1)) {
           // More rounds in this set
           if (roundBreakDuration > 0) {
             // Break between rounds
@@ -138,15 +138,23 @@ function App() {
                 <label className="block text-white text-sm font-medium mb-2">
                   Round Count
                 </label>
-                <select 
-                  value={roundCount} 
-                  onChange={(e) => setRoundCount(Number(e.target.value))}
-                  className="w-full px-3 py-2 bg-white rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  {[1,2,3,4,5,6,7,8].map(num => (
-                    <option key={num} value={num}>{num} round{num > 1 ? 's' : ''}</option>
-                  ))}
-                </select>
+                <input 
+                  type="number"
+                  min="1"
+                  max="99"
+                  value={roundCount || ''} 
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    // Convert to number, but allow empty string during editing
+                    setRoundCount(value === '' ? '' : Math.max(1, parseInt(value) || 1));
+                  }}
+                  onBlur={(e) => {
+                    // Ensure we have a valid number when focus is lost
+                    const value = parseInt(e.target.value) || 1;
+                    setRoundCount(Math.max(1, Math.min(99, value)));
+                  }}
+                  className="w-full px-3 py-2 bg-white rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                />
               </div>
               
               <div className="flex-1">
@@ -238,7 +246,7 @@ function App() {
                 Set {currentSet} of {sets}
               </div>
               <div className="text-2xl md:text-3xl font-medium mb-2">
-                Round {currentRound} of {roundCount}
+                Round {currentRound} of {Number(roundCount || 1)}
               </div>
               <div className="text-2xl md:text-4xl opacity-75">
                 {isBreak ? 'Set Break' : isRoundBreak ? 'Round Break' : 'Work Time'}
