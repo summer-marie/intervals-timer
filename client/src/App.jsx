@@ -95,7 +95,14 @@ function App() {
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
-    return `${mins}:${secs.toString().padStart(2, '0')}`
+    const formattedTime = `${mins}:${secs.toString().padStart(2, '0')}`
+    
+    // Remove "0:" prefix when under 1 minute
+    if (mins === 0) {
+      return secs.toString().padStart(2, '0')
+    }
+    
+    return formattedTime
   }
 
   return (
