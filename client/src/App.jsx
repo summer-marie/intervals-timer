@@ -9,6 +9,7 @@ function App() {
   
   // Timer state
   const [isRunning, setIsRunning] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
   const [currentSet, setCurrentSet] = useState(1)
   const [timeLeft, setTimeLeft] = useState(0)
   const [isBreak, setIsBreak] = useState(false)
@@ -18,11 +19,11 @@ function App() {
   useEffect(() => {
     let interval = null
     
-    if (isRunning && timeLeft > 0) {
+    if (isRunning && !isPaused && timeLeft > 0) {
       interval = setInterval(() => {
         setTimeLeft(time => time - 1)
       }, 1000)
-    } else if (isRunning && timeLeft === 0) {
+    } else if (isRunning && !isPaused && timeLeft === 0) {
       // Handle round/break transitions
       if (isBreak) {
         // Break is over, start next round
@@ -53,18 +54,28 @@ function App() {
     }
 
     return () => clearInterval(interval)
-  }, [isRunning, timeLeft, currentSet, sets, roundDuration, breakDuration, isBreak])
+  }, [isRunning, isPaused, timeLeft, currentSet, sets, roundDuration, breakDuration, isBreak])
 
   const startTimer = () => {
     setIsRunning(true)
+    setIsPaused(false)
     setCurrentSet(1)
     setTimeLeft(roundDuration)
     setIsBreak(false)
     setIsComplete(false)
   }
 
+  const pauseTimer = () => {
+    setIsPaused(true)
+  }
+
+  const resumeTimer = () => {
+    setIsPaused(false)
+  }
+
   const stopTimer = () => {
     setIsRunning(false)
+    setIsPaused(false)
     setCurrentSet(1)
     setTimeLeft(0)
     setIsBreak(false)
@@ -79,12 +90,12 @@ function App() {
 
   return (
     <div className="app hero-pattern-topography min-h-screen">
-      <div className="container mx-auto px-4 py-8 max-w-md">
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
         <h1 className="text-4xl font-bold text-white text-center mb-8">Intervals Timer</h1>
         
         {/* Settings Panel */}
         {!isRunning && !isComplete && (
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 mb-6">
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 mb-6 max-w-md mx-auto">
             <h2 className="text-xl font-semibold text-white mb-4">Setup Your Workout</h2>
             
             {/* Round Duration Dropdown */}
@@ -150,32 +161,55 @@ function App() {
 
         {/* Timer Display */}
         {isRunning && (
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 text-center mb-6">
-            <div className="text-white mb-4">
-              <div className="text-lg font-medium">
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mb-6 min-h-[80vh] flex flex-col justify-center">
+            <div className="text-white mb-8 text-center">
+              <div className="text-4xl md:text-6xl font-bold mb-4">
                 Set {currentSet} of {sets}
               </div>
-              <div className="text-sm opacity-75">
+              <div className="text-2xl md:text-4xl opacity-75">
                 {isBreak ? 'Break Time' : 'Work Time'}
+                {isPaused && ' - PAUSED'}
               </div>
             </div>
             
-            <div className="text-6xl font-bold text-white mb-6">
-              {formatTime(timeLeft)}
+            <div className="text-center mb-8 flex-1 flex items-center justify-center">
+              <div className={`text-[12rem] md:text-[18rem] lg:text-[24rem] font-bold leading-none ${
+                isBreak ? 'text-red-500' : 'text-white'
+              }`}>
+                {formatTime(timeLeft)}
+              </div>
             </div>
 
-            <button 
-              onClick={stopTimer}
-              className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg transition-colors"
-            >
-              Stop
-            </button>
+            <div className="flex gap-4 justify-center">
+              {isPaused ? (
+                <button 
+                  onClick={resumeTimer}
+                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg transition-colors text-xl"
+                >
+                  Resume
+                </button>
+              ) : (
+                <button 
+                  onClick={pauseTimer}
+                  className="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-4 px-8 rounded-lg transition-colors text-xl"
+                >
+                  Pause
+                </button>
+              )}
+              
+              <button 
+                onClick={stopTimer}
+                className="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg transition-colors text-xl"
+              >
+                Stop
+              </button>
+            </div>
           </div>
         )}
 
         {/* Completion Message */}
         {isComplete && (
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 text-center mb-6">
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-8 text-center mb-6 max-w-md mx-auto">
             <div className="text-4xl mb-4">🎉</div>
             <h2 className="text-2xl font-bold text-white mb-4">Workout Complete!</h2>
             <p className="text-white mb-6">
