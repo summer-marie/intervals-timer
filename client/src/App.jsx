@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import BgOptions from './components/BgOptions'
+import ColorOptions from './components/ColorOptions'
 
 function App() {
   // State for user selections
@@ -10,6 +11,12 @@ function App() {
   const [sets, setSets] = useState(3)
   const [breakDuration, setBreakDuration] = useState(30)
   const [currentBg, setCurrentBg] = useState('hero-pattern-topography')
+  const [currentColor, setCurrentColor] = useState({
+    id: 'dark-gray',
+    name: 'Dark Gray',
+    primary: '#1a202c',
+    secondary: '#374151'
+  })
   
   // Timer state
   const [isRunning, setIsRunning] = useState(false)
@@ -125,8 +132,12 @@ function App() {
   }
 
   return (
-    <div className={`app ${currentBg} min-h-screen`}>
+    <div className={`app ${currentBg} min-h-screen`} style={{
+      '--primary-color': currentColor.primary,
+      '--secondary-color': currentColor.secondary
+    }}>
       <BgOptions currentBg={currentBg} onBgChange={setCurrentBg} />
+      <ColorOptions currentColor={currentColor} onColorChange={setCurrentColor} />
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         <h1 className="text-4xl font-bold text-white text-center mb-8">Intervals Timer</h1>
         
