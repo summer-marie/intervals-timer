@@ -10,7 +10,7 @@ function App() {
   const [roundBreakDuration, setRoundBreakDuration] = useState(0)
   const [sets, setSets] = useState(3)
   const [breakDuration, setBreakDuration] = useState(30)
-  const [currentBg, setCurrentBg] = useState('hero-pattern-topography')
+  const [currentBg, setCurrentBg] = useState('hero-pattern-temple')
   const [currentColor, setCurrentColor] = useState({
     id: 'dark-gray',
     name: 'Dark Gray',

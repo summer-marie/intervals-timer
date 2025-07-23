@@ -5,19 +5,19 @@ const BgOptions = ({ currentBg, onBgChange }) => {
 
   const backgroundOptions = [
     {
-      id: 'topography',
+      id: '4-point-stars',
       name: '4-Point Stars',
       className: 'hero-pattern-4-point-stars',
       preview: 'M8 4l4 2-4 2-2 4-4-2 4-2 2-4zm16 0l4 2-4 2-2 4-4-2 4-2 2-4z'
     },
     {
-      id: 'hexagons',
+      id: 'temple',
       name: 'Temple',
       className: 'hero-pattern-temple',
       preview: 'M50 10h20v20H50V10zm0 30h20v20H50V40zm30-30h20v20H80V10zm0 30h20v20H80V40zM20 50h20v20H20V50zm60 0h20v20H80V50z'
     },
     {
-      id: 'overlapping-hexagons',
+      id: 'bubbles',
       name: 'Bubbles',
       className: 'hero-pattern-bubbles',
       preview: 'M20 20c3 0 5-2 5-5s-2-5-5-5-5 2-5 5 2 5 5 5zm25 15c2 0 4-2 4-4s-2-4-4-4-4 2-4 4 2 4 4 4zm-15 20c1.5 0 3-1.5 3-3s-1.5-3-3-3-3 1.5-3 3 1.5 3 3 3zm35-10c2.5 0 4.5-2 4.5-4.5s-2-4.5-4.5-4.5-4.5 2-4.5 4.5 2 4.5 4.5 4.5z'
