@@ -79,7 +79,7 @@ const ColorOptions = ({ currentColor, onColorChange }) => {
       )}
 
       {/* Sidebar */}
-      <div className={`fixed top-0 right-0 h-full bg-black/50 backdrop-blur-lg z-40 transition-transform duration-300 ease-in-out ${
+      <div className={`fixed top-0 right-0 h-full bg-black/50 backdrop-blur-lg z-40 transition-transform duration-300 ease-in-out flex flex-col ${
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`} style={{ width: '320px' }}>
         
@@ -90,54 +90,56 @@ const ColorOptions = ({ currentColor, onColorChange }) => {
         </div>
 
         {/* Color Options */}
-        <div className="p-6">
-          <div className="space-y-4">
-            {colorSchemes.map((scheme) => (
-              <div
-                key={scheme.id}
-                onClick={() => onColorChange(scheme)}
-                className={`cursor-pointer group transition-all duration-200 p-4 rounded-lg border-2 ${
-                  currentColor?.id === scheme.id 
-                    ? 'border-blue-400 bg-blue-400/10' 
-                    : 'border-white/20 hover:border-white/40 hover:bg-white/5'
-                }`}
-              >
-                {/* Color Preview */}
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="flex gap-1">
-                    {/* Primary Color Circle */}
-                    <div 
-                      className="w-6 h-6 rounded-full border-2 border-white/30"
-                      style={{ backgroundColor: scheme.primary }}
-                    ></div>
-                    {/* Secondary Color Circle */}
-                    <div 
-                      className="w-6 h-6 rounded-full border-2 border-white/30"
-                      style={{ backgroundColor: scheme.secondary }}
-                    ></div>
+        <div className="flex-1 overflow-y-auto">
+          <div className="p-6">
+            <div className="space-y-4">
+              {colorSchemes.map((scheme) => (
+                <div
+                  key={scheme.id}
+                  onClick={() => onColorChange(scheme)}
+                  className={`cursor-pointer group transition-all duration-200 p-4 rounded-lg border-2 ${
+                    currentColor?.id === scheme.id 
+                      ? 'border-blue-400 bg-blue-400/10' 
+                      : 'border-white/20 hover:border-white/40 hover:bg-white/5'
+                  }`}
+                >
+                  {/* Color Preview */}
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="flex gap-1">
+                      {/* Primary Color Circle */}
+                      <div 
+                        className="w-6 h-6 rounded-full border-2 border-white/30"
+                        style={{ backgroundColor: scheme.primary }}
+                      ></div>
+                      {/* Secondary Color Circle */}
+                      <div 
+                        className="w-6 h-6 rounded-full border-2 border-white/30"
+                        style={{ backgroundColor: scheme.secondary }}
+                      ></div>
+                    </div>
+                    
+                    {/* Selected Indicator */}
+                    {currentColor?.id === scheme.id && (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-blue-400 ml-auto">
+                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                      </svg>
+                    )}
                   </div>
-                  
-                  {/* Selected Indicator */}
-                  {currentColor?.id === scheme.id && (
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-blue-400 ml-auto">
-                      <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                    </svg>
-                  )}
-                </div>
 
-                {/* Label */}
-                <p className={`text-sm font-medium transition-colors duration-200 ${
-                  currentColor?.id === scheme.id ? 'text-blue-400' : 'text-white group-hover:text-white/90'
-                }`}>
-                  {scheme.name}
-                </p>
-              </div>
-            ))}
+                  {/* Label */}
+                  <p className={`text-sm font-medium transition-colors duration-200 ${
+                    currentColor?.id === scheme.id ? 'text-blue-400' : 'text-white group-hover:text-white/90'
+                  }`}>
+                    {scheme.name}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Footer with Close */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-white/20 text-center">
+        <div className="p-6 border-t border-white/20 text-center">
           <span 
             onClick={() => setIsOpen(false)}
             className="text-white/70 hover:text-white cursor-pointer transition-colors duration-200 text-xl font-medium"

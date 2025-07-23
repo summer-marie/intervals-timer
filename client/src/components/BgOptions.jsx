@@ -6,21 +6,21 @@ const BgOptions = ({ currentBg, onBgChange }) => {
   const backgroundOptions = [
     {
       id: 'topography',
-      name: 'Topography',
-      className: 'hero-pattern-topography',
-      preview: 'M40 40L40 40Q42 38 44 40T48 40T52 40Q54 38 56 40L56 40'
+      name: '4-Point Stars',
+      className: 'hero-pattern-4-point-stars',
+      preview: 'M8 4l4 2-4 2-2 4-4-2 4-2 2-4zm16 0l4 2-4 2-2 4-4-2 4-2 2-4z'
     },
     {
       id: 'hexagons',
-      name: 'Hexagons',
-      className: 'hero-pattern-hexagons',
-      preview: 'M28 66L14 52L14 38L28 24L42 38L42 52L28 66Z'
+      name: 'Temple',
+      className: 'hero-pattern-temple',
+      preview: 'M50 10h20v20H50V10zm0 30h20v20H50V40zm30-30h20v20H80V10zm0 30h20v20H80V40zM20 50h20v20H20V50zm60 0h20v20H80V50z'
     },
     {
       id: 'overlapping-hexagons',
-      name: 'Overlapping Hexagons',
-      className: 'hero-pattern-overlapping-hexagons',
-      preview: 'M28 66L14 52L14 38L28 24L42 38L42 52L28 66ZM28 86L14 72L14 58L28 44L42 58L42 72L28 86Z'
+      name: 'Bubbles',
+      className: 'hero-pattern-bubbles',
+      preview: 'M20 20c3 0 5-2 5-5s-2-5-5-5-5 2-5 5 2 5 5 5zm25 15c2 0 4-2 4-4s-2-4-4-4-4 2-4 4 2 4 4 4zm-15 20c1.5 0 3-1.5 3-3s-1.5-3-3-3-3 1.5-3 3 1.5 3 3 3zm35-10c2.5 0 4.5-2 4.5-4.5s-2-4.5-4.5-4.5-4.5 2-4.5 4.5 2 4.5 4.5 4.5z'
     },
     {
       id: 'moroccan',
