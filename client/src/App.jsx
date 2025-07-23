@@ -255,7 +255,7 @@ function App() {
         {/* Timer Display */}
         {isRunning && (
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mb-6 min-h-[80vh] flex flex-col justify-center">
-            <div className="text-white mb-8 text-center">
+            <div className="text-white mb-4 text-center">
               <div className="text-4xl md:text-6xl font-bold mb-4">
                 Set {currentSet} of {sets}
               </div>
@@ -268,7 +268,7 @@ function App() {
               </div>
             </div>
             
-            <div className="text-center mb-8 flex-1 flex items-center justify-center">
+            <div className="text-center mb-4 flex-1 flex items-center justify-center">
               <div className={`text-[12rem] md:text-[18rem] lg:text-[24rem] font-bold leading-none ${
                 isBreak || isRoundBreak ? 'text-red-500' : 'text-white'
               }`}>

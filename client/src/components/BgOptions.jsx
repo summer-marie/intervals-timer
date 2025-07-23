@@ -71,7 +71,7 @@ const BgOptions = ({ currentBg, onBgChange }) => {
       )}
 
       {/* Sidebar */}
-      <div className={`fixed top-0 left-0 h-full bg-black/50 backdrop-blur-lg z-40 transition-transform duration-300 ease-in-out ${
+      <div className={`fixed top-0 left-0 h-full bg-black/50 backdrop-blur-lg z-40 transition-transform duration-300 ease-in-out flex flex-col ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       }`} style={{ width: '380px' }}>
         
@@ -82,63 +82,65 @@ const BgOptions = ({ currentBg, onBgChange }) => {
         </div>
 
         {/* Background Options */}
-        <div className="p-6">
-          <div className="grid grid-cols-2 gap-6">
-            {backgroundOptions.map((bg) => (
-              <div
-                key={bg.id}
-                onClick={() => onBgChange(bg.className)}
-                className={`cursor-pointer group transition-all duration-200 ${
-                  currentBg === bg.className ? 'scale-105' : 'hover:scale-102'
-                }`}
-              >
-                {/* Preview Circle */}
-                <div className={`w-16 h-16 mx-auto mb-3 rounded-full border-4 transition-all duration-200 overflow-hidden relative ${
-                  currentBg === bg.className 
-                    ? 'border-blue-400 shadow-lg shadow-blue-400/50' 
-                    : 'border-white/30 group-hover:border-white/50'
-                }`}>
-                  {/* Preview Pattern */}
-                  <div className={`w-full h-full ${bg.className} opacity-80`}>
-                    <svg 
-                      width="64" 
-                      height="64" 
-                      viewBox="0 0 80 80" 
-                      className="w-full h-full"
-                    >
-                      <path 
-                        d={bg.preview} 
-                        stroke="currentColor" 
-                        strokeWidth="1" 
-                        fill="none" 
-                        className="text-white/60"
-                      />
-                    </svg>
-                  </div>
-                  
-                  {/* Selected Indicator */}
-                  {currentBg === bg.className && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-blue-500/20">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-blue-400">
-                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+        <div className="flex-1 overflow-y-auto">
+          <div className="p-6">
+            <div className="grid grid-cols-2 gap-6">
+              {backgroundOptions.map((bg) => (
+                <div
+                  key={bg.id}
+                  onClick={() => onBgChange(bg.className)}
+                  className={`cursor-pointer group transition-all duration-200 ${
+                    currentBg === bg.className ? 'scale-105' : 'hover:scale-102'
+                  }`}
+                >
+                  {/* Preview Circle */}
+                  <div className={`w-16 h-16 mx-auto mb-3 rounded-full border-4 transition-all duration-200 overflow-hidden relative ${
+                    currentBg === bg.className 
+                      ? 'border-blue-400 shadow-lg shadow-blue-400/50' 
+                      : 'border-white/30 group-hover:border-white/50'
+                  }`}>
+                    {/* Preview Pattern */}
+                    <div className={`w-full h-full ${bg.className} opacity-80`}>
+                      <svg 
+                        width="64" 
+                        height="64" 
+                        viewBox="0 0 80 80" 
+                        className="w-full h-full"
+                      >
+                        <path 
+                          d={bg.preview} 
+                          stroke="currentColor" 
+                          strokeWidth="1" 
+                          fill="none" 
+                          className="text-white/60"
+                        />
                       </svg>
                     </div>
-                  )}
-                </div>
+                    
+                    {/* Selected Indicator */}
+                    {currentBg === bg.className && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-blue-500/20">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="text-blue-400">
+                          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                        </svg>
+                      </div>
+                    )}
+                  </div>
 
-                {/* Label */}
-                <p className={`text-center text-sm font-medium transition-colors duration-200 ${
-                  currentBg === bg.className ? 'text-blue-400' : 'text-white group-hover:text-white/90'
-                }`}>
-                  {bg.name}
-                </p>
-              </div>
-            ))}
+                  {/* Label */}
+                  <p className={`text-center text-sm font-medium transition-colors duration-200 ${
+                    currentBg === bg.className ? 'text-blue-400' : 'text-white group-hover:text-white/90'
+                  }`}>
+                    {bg.name}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Footer with Close */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-white/20 text-center">
+        <div className="p-6 border-t border-white/20 text-center">
           <span 
             onClick={() => setIsOpen(false)}
             className="text-white/70 hover:text-white cursor-pointer transition-colors duration-200 text-xl font-medium"
