@@ -255,16 +255,30 @@ function App() {
         {/* Timer Display */}
         {isRunning && (
           <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mb-6 min-h-[80vh] flex flex-col justify-center">
-            <div className="text-white mb-4 text-center">
-              <div className="text-4xl md:text-6xl font-bold mb-4">
-                Set {currentSet} of {sets}
-              </div>
-              <div className="text-2xl md:text-3xl font-medium mb-2">
-                Round {currentRound} of {Number(roundCount || 1)}
-              </div>
-              <div className="text-2xl md:text-4xl opacity-75">
-                {isBreak ? 'Set Break' : isRoundBreak ? 'Round Break' : 'Work Time'}
-                {isPaused && ' - PAUSED'}
+            <div className="text-white mb-4">
+              {/* Three-column header layout */}
+              <div className="grid grid-cols-3 items-center mb-4">
+                {/* Left: Set Count */}
+                <div className="text-left">
+                  <div className="text-2xl md:text-3xl font-bold">
+                    Set {currentSet} of {sets}
+                  </div>
+                </div>
+                
+                {/* Center: Work Time */}
+                <div className="text-center">
+                  <div className="text-2xl md:text-4xl opacity-75">
+                    {isBreak ? 'Set Break' : isRoundBreak ? 'Round Break' : 'Work Time'}
+                    {isPaused && ' - PAUSED'}
+                  </div>
+                </div>
+                
+                {/* Right: Round Count */}
+                <div className="text-right">
+                  <div className="text-2xl md:text-3xl font-medium">
+                    Round {currentRound} of {Number(roundCount || 1)}
+                  </div>
+                </div>
               </div>
             </div>
             
