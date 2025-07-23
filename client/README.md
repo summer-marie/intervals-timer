@@ -56,8 +56,8 @@ npm --version
    ```
 
 5. **Open your browser**
-   - The app will be available at `http://localhost:5173`
-   - For mobile testing, use the network URL shown in the terminal (e.g., `http://192.168.1.x:5173`)
+   - The app will be available at `http://localhost:3000`
+   - For mobile testing, use the network URL shown in the terminal (e.g., `http://192.168.1.x:3000`)
 
 ## Available Scripts
 
@@ -128,7 +128,7 @@ The app includes 8 background patterns from Hero Patterns:
 
 ### Testing on Your Phone
 1. Start the dev server: `npm run dev`
-2. Note the network URL (e.g., `http://192.168.1.x:5173`)
+2. Note the network URL (e.g., `http://192.168.1.x:3000`)
 3. Open that URL in your phone's browser
 4. No app installation required!
 
