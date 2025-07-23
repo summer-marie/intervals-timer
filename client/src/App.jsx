@@ -138,7 +138,7 @@ function App() {
     }}>
       <BgOptions currentBg={currentBg} onBgChange={setCurrentBg} />
       <ColorOptions currentColor={currentColor} onColorChange={setCurrentColor} />
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
+      <div className="container mx-auto px-4 py-8 max-w-5xl">
         <h1 className="text-4xl font-bold text-white text-center mb-8">Intervals Timer</h1>
         
         {/* Settings Panel */}

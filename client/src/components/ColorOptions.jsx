@@ -90,8 +90,8 @@ const ColorOptions = ({ currentColor, onColorChange }) => {
         </div>
 
         {/* Color Options */}
-        <div className="flex-1 overflow-y-auto">
-          <div className="p-6">
+        <div className="flex-1 overflow-y-auto" style={{ direction: 'rtl' }}>
+          <div className="p-6" style={{ direction: 'ltr' }}>
             <div className="space-y-4">
               {colorSchemes.map((scheme) => (
                 <div
