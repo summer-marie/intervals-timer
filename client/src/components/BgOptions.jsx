@@ -11,12 +11,6 @@ const BgOptions = ({ currentBg, onBgChange }) => {
       preview: 'M40 40L40 40Q42 38 44 40T48 40T52 40Q54 38 56 40L56 40'
     },
     {
-      id: 'circuit-board',
-      name: 'Circuit Board',
-      className: 'hero-pattern-circuit-board',
-      preview: 'M8 8h8v8H8V8zm16 0h8v8h-8V8zM8 24h8v8H8v-8zm16 0h8v8h-8v-8z'
-    },
-    {
       id: 'hexagons',
       name: 'Hexagons',
       className: 'hero-pattern-hexagons',
@@ -29,10 +23,34 @@ const BgOptions = ({ currentBg, onBgChange }) => {
       preview: 'M28 66L14 52L14 38L28 24L42 38L42 52L28 66ZM28 86L14 72L14 58L28 44L42 58L42 72L28 86Z'
     },
     {
-      id: 'wiggle',
-      name: 'Wiggle',
-      className: 'hero-pattern-wiggle',
-      preview: 'M0 40Q10 30 20 40T40 40T60 40Q70 30 80 40'
+      id: 'moroccan',
+      name: 'Moroccan',
+      className: 'hero-pattern-moroccan',
+      preview: 'M40 20v8h4c6 0 12 6 12 12s-6 12-12 12h-4v8c-6-2-10-6-12-12-2 6-6 10-12 12v-8h-4c-6 0-12-6-12-12s6-12 12-12h4v-8c6 2 10 6 12 12 2-6 6-10 12-12z'
+    },
+    {
+      id: 'circuit-board',
+      name: 'Circuit Board',
+      className: 'hero-pattern-circuit-board',
+      preview: 'M20 10h4v4h-4zm8 0h4v4h-4zm8 0h4v4h-4zm-16 8h4v4h-4zm8 0h4v4h-4zm8 0h4v4h-4zm-16 8h4v4h-4zm8 0h4v4h-4zm8 0h4v4h-4z'
+    },
+    {
+      id: 'slanted-stars',
+      name: 'Slanted Stars',
+      className: 'hero-pattern-slanted-stars',
+      preview: 'M0 15l15 15H0V15zM15 0l15 15V0H15z'
+    },
+    {
+      id: 'curtain',
+      name: 'Curtain',
+      className: 'hero-pattern-curtain',
+      preview: 'M20 12v-2L0 0v10l4 2h16zm18 0l4-2V0L22 10v2h16z'
+    },
+    {
+      id: 'glamorous',
+      name: 'Glamorous',
+      className: 'hero-pattern-glamorous',
+      preview: 'M40 40l8-8h8l-8 8 8 8h-8l-8-8zm20 0l8-8h8l-8 8 8 8h-8l-8-8z'
     }
   ]
 
@@ -59,27 +77,12 @@ const BgOptions = ({ currentBg, onBgChange }) => {
         
         {/* Header */}
         <div className="p-6 border-b border-white/20">
-          {/* Header with inline close button */}
-          <div className="flex items-center justify-between mb-2">
-            <h2 className="text-xl font-bold text-white">Background Options</h2>
-            
-            {/* Close Button */}
-            <button
-              onClick={() => setIsOpen(false)}
-              className="bg-white/20 backdrop-blur-sm text-white px-4 py-3 rounded-full hover:bg-white/30 transition-all duration-300 flex items-center gap-2"
-              aria-label="Close background options"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-              </svg>
-              <span className="text-sm font-medium">Close</span>
-            </button>
-          </div>
+          <h2 className="text-xl font-bold text-white mb-2">Background Options</h2>
           <p className="text-white/70 text-sm">Choose your workout background</p>
         </div>
 
         {/* Background Options */}
-        <div className="p-6 pb-20">
+        <div className="p-6">
           <div className="grid grid-cols-2 gap-6">
             {backgroundOptions.map((bg) => (
               <div
@@ -132,6 +135,16 @@ const BgOptions = ({ currentBg, onBgChange }) => {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Footer with Close */}
+        <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-white/20 text-center">
+          <span 
+            onClick={() => setIsOpen(false)}
+            className="text-white/70 hover:text-white cursor-pointer transition-colors duration-200 text-xl font-medium"
+          >
+            Close
+          </span>
         </div>
       </div>
 
