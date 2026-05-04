@@ -152,7 +152,45 @@ function speak(text) {
   utterance.rate = 1.15;
   utterance.pitch = 1.0;
   utterance.volume = 1.0;
+  
+  // Use selected voice if available
+  const voiceSelect = document.getElementById('voiceSelect');
+  const voices = window.speechSynthesis.getVoices();
+  if (voiceSelect && voiceSelect.value !== '' && voices[voiceSelect.value]) {
+    utterance.voice = voices[voiceSelect.value];
+  }
+  
   window.speechSynthesis.speak(utterance);
+}
+
+function loadVoices() {
+  const voiceSelect = document.getElementById('voiceSelect');
+  if (!voiceSelect) return;
+  
+  const voices = window.speechSynthesis.getVoices();
+  voiceSelect.innerHTML = '';
+  
+  voices.forEach((voice, i) => {
+    const option = document.createElement('option');
+    option.value = i;
+    option.textContent = voice.name + ' (' + voice.lang + ')';
+    voiceSelect.appendChild(option);
+  });
+  
+  // Auto-select an English voice by default
+  const englishVoice = voices.find(v => v.lang.startsWith('en'));
+  if (englishVoice) {
+    voiceSelect.value = voices.indexOf(englishVoice);
+  }
+}
+
+function updateVoiceSelectVisibility() {
+  const voiceSelectGroup = document.getElementById('voiceSelectGroup');
+  if (state.voiceEnabled) {
+    voiceSelectGroup.classList.add('visible');
+  } else {
+    voiceSelectGroup.classList.remove('visible');
+  }
 }
 
 function playBeep(frequency = 880, duration = 0.1, volume = 0.3) {
@@ -608,6 +646,7 @@ document.getElementById('muteToggle').addEventListener('click', () => {
 document.getElementById('voiceToggle').addEventListener('click', () => {
   state.voiceEnabled = !state.voiceEnabled;
   document.getElementById('voiceToggle').textContent = state.voiceEnabled ? '🎙️' : '🔇';
+  updateVoiceSelectVisibility();
 });
 
 document.getElementById('bgSelectorBtn').addEventListener('click', () => {
@@ -615,6 +654,7 @@ document.getElementById('bgSelectorBtn').addEventListener('click', () => {
   const colorPanel = document.getElementById('colorPanel');
   panel.classList.toggle('open');
   colorPanel.classList.remove('open');
+  updateSelectorButtonStates();
 });
 
 document.getElementById('colorSelectorBtn').addEventListener('click', () => {
@@ -622,7 +662,39 @@ document.getElementById('colorSelectorBtn').addEventListener('click', () => {
   const bgPanel = document.getElementById('bgPanel');
   panel.classList.toggle('open');
   bgPanel.classList.remove('open');
+  updateSelectorButtonStates();
 });
+
+// Close buttons for panels
+document.getElementById('bgPanelCloseBtn').addEventListener('click', () => {
+  document.getElementById('bgPanel').classList.remove('open');
+  updateSelectorButtonStates();
+});
+
+document.getElementById('colorPanelCloseBtn').addEventListener('click', () => {
+  document.getElementById('colorPanel').classList.remove('open');
+  updateSelectorButtonStates();
+});
+
+// Update selector button active states
+function updateSelectorButtonStates() {
+  const bgBtn = document.getElementById('bgSelectorBtn');
+  const colorBtn = document.getElementById('colorSelectorBtn');
+  const bgPanel = document.getElementById('bgPanel');
+  const colorPanel = document.getElementById('colorPanel');
+  
+  if (bgPanel.classList.contains('open')) {
+    bgBtn.classList.add('active');
+  } else {
+    bgBtn.classList.remove('active');
+  }
+  
+  if (colorPanel.classList.contains('open')) {
+    colorBtn.classList.add('active');
+  } else {
+    colorBtn.classList.remove('active');
+  }
+}
 
 // Input validation for round count
 document.getElementById('roundCount').addEventListener('blur', (e) => {
@@ -646,6 +718,17 @@ function init() {
   renderColors();
   updateSettingsInputs();
   showSettingsPanel();
+  
+  // Load voices for speech synthesis
+  if (window.speechSynthesis) {
+    loadVoices();
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+  }
+  
+  // Initialize voice select visibility
+  updateVoiceSelectVisibility();
 }
 
 // Cancel speech on page unload
