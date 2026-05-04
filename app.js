@@ -123,7 +123,14 @@ const colors = [
   { id: 'crimson-red', name: 'Crimson Red', primary: '#7f1d1d', secondary: '#ef4444' },
   { id: 'midnight-blue', name: 'Midnight Blue', primary: '#1e3a8a', secondary: '#3b82f6' },
   { id: 'amber-gold', name: 'Amber Gold', primary: '#92400e', secondary: '#f59e0b' },
-  { id: 'rose-pink', name: 'Rose Pink', primary: '#9f1239', secondary: '#f43f5e' }
+  { id: 'pink', name: 'Pink', primary: '#c2185b', secondary: '#e91e8c' },
+  { id: 'pastel-green', name: 'Pastel Green', primary: '#6dbf87', secondary: '#a8d8b9' },
+  { id: 'pastel-blue', name: 'Pastel Blue', primary: '#6aafd6', secondary: '#a8cfe8' },
+  { id: 'pastel-grey', name: 'Soft Grey', primary: '#9eaab5', secondary: '#c8d3da' },
+  { id: 'pastel-cream', name: 'Off White', primary: '#c8bfa8', secondary: '#e8e0d0' },
+  { id: 'chrome-red', name: 'Chrome Red', primary: '#c0392b', secondary: '#922b21' },
+  { id: 'chrome-slate', name: 'Chrome Slate', primary: '#5d6d7e', secondary: '#2e4057' },
+  { id: 'chrome-purple', name: 'Chrome Purple', primary: '#7d3c98', secondary: '#4a235a' }
 ];
 
 const motivationalMessages = [
