@@ -28,7 +28,10 @@ const state = {
 
   // Audio
   isMuted: false,
-  audioContext: null
+  audioContext: null,
+  
+  // Voice
+  voiceEnabled: true
 };
 
 // ===== DATA =====
@@ -139,6 +142,19 @@ function initAudio() {
   }
 }
 
+// ===== VOICE SYSTEM (Web Speech API) =====
+function speak(text) {
+  if (!state.voiceEnabled) return;
+  if (!window.speechSynthesis) return;
+  
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.rate = 1.15;
+  utterance.pitch = 1.0;
+  utterance.volume = 1.0;
+  window.speechSynthesis.speak(utterance);
+}
+
 function playBeep(frequency = 880, duration = 0.1, volume = 0.3) {
   if (state.isMuted || !state.audioContext) return;
 
@@ -201,6 +217,7 @@ function startTimer() {
 
   initAudio();
   playBeep();
+  speak("Let's go!");
 
   updateUI();
   showTimerDisplay();
@@ -214,6 +231,11 @@ function timerTick() {
   // Countdown beeps for last 3 seconds of work intervals
   if (!state.isBreak && !state.isRoundBreak && state.timeLeft <= 3 && state.timeLeft > 0) {
     playCountdownBeep();
+  }
+  
+  // Voice countdown at 3 seconds during work intervals
+  if (!state.isBreak && !state.isRoundBreak && state.timeLeft === 3) {
+    speak("3, 2, 1");
   }
 
   state.timeLeft--;
@@ -235,12 +257,14 @@ function handleIntervalComplete() {
     state.isBreak = false;
     state.isRoundBreak = false;
     playBeep();
+    speak("Begin!");
   } else if (state.isRoundBreak) {
     // Round break is over, continue to next round
     state.currentRound++;
     state.timeLeft = state.roundDuration;
     state.isRoundBreak = false;
     playBeep();
+    speak("Begin!");
   } else {
     // Round is over
     if (state.currentRound < state.roundCount) {
@@ -250,11 +274,13 @@ function handleIntervalComplete() {
         state.timeLeft = state.roundBreakDuration;
         state.isRoundBreak = true;
         playDoubleBeep();
+        speak("Rest");
       } else {
         // No round break, continue to next round
         state.currentRound++;
         state.timeLeft = state.roundDuration;
         playBeep();
+        speak("Begin!");
       }
     } else {
       // Set completed
@@ -264,12 +290,14 @@ function handleIntervalComplete() {
           state.timeLeft = state.breakDuration;
           state.isBreak = true;
           playDoubleBeep();
+          speak("Set break. Rest up.");
         } else {
           // No break, go to next set
           state.currentSet++;
           state.currentRound = 1;
           state.timeLeft = state.roundDuration;
           playBeep();
+          speak("Begin!");
         }
       } else {
         // Workout complete!
@@ -284,11 +312,13 @@ function handleIntervalComplete() {
 
 function pauseTimer() {
   state.isPaused = true;
+  speak("Paused");
   updateUI();
 }
 
 function resumeTimer() {
   state.isPaused = false;
+  speak("Resume in 3, 2, 1");
   updateUI();
 }
 
@@ -304,6 +334,10 @@ function stopTimer() {
   state.isComplete = false;
   state.totalElapsedTime = 0;
   
+  if (window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+  }
+  
   showSettingsPanel();
 }
 
@@ -313,6 +347,7 @@ function completeWorkout() {
   state.isComplete = true;
 
   playCompletionMelody();
+  speak("Workout complete. Great job!");
 
   // Calculate summary
   const totalRounds = state.sets * state.roundCount;
@@ -570,6 +605,11 @@ document.getElementById('muteToggle').addEventListener('click', () => {
   document.getElementById('muteToggle').textContent = state.isMuted ? '🔇' : '🔊';
 });
 
+document.getElementById('voiceToggle').addEventListener('click', () => {
+  state.voiceEnabled = !state.voiceEnabled;
+  document.getElementById('voiceToggle').textContent = state.voiceEnabled ? '🎙️' : '🔇';
+});
+
 document.getElementById('bgSelectorBtn').addEventListener('click', () => {
   const panel = document.getElementById('bgPanel');
   const colorPanel = document.getElementById('colorPanel');
@@ -607,5 +647,12 @@ function init() {
   updateSettingsInputs();
   showSettingsPanel();
 }
+
+// Cancel speech on page unload
+window.addEventListener('beforeunload', () => {
+  if (window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+  }
+});
 
 init();
