@@ -1,3 +1,24 @@
+/*
+ * ============================================
+ *   STYLES.CSS — TABLE OF CONTENTS
+ * ============================================
+ *
+ *   1.  RESET & BASE STYLES
+ *   2.  HERO PATTERN BACKGROUNDS
+ *   3.  LAYOUT
+ *   4.  MUTE BUTTON
+ *   5.  VOICE TOGGLE BUTTON
+ *   6.  BACKGROUND/COLOR SELECTORS
+ *   7.  PRESET SECTION
+ *   8.  SETTINGS PANEL
+ *   9.  TIMER DISPLAY
+ *   10. COMPLETION SCREEN
+ *   11. UTILITY CLASSES
+ *   12. RESPONSIVE
+ *
+ * ============================================
+ */
+
 /* ===== RESET & BASE STYLES ===== */
 * {
   margin: 0;
@@ -13,6 +34,7 @@
   --text-white: #ffffff;
   --bg-dark: #0a0a0a;
   --bg-overlay: rgba(255, 255, 255, 0.1);
+  --text-on-primary: #ffffff;
 }
 
 body {
@@ -402,7 +424,9 @@ h1 {
 }
 
 .input-group input[type="number"] {
+  appearance: textfield;
   -moz-appearance: textfield;
+  -webkit-appearance: textfield;
 }
 
 .input-group input[type="number"]::-webkit-outer-spin-button,
@@ -452,6 +476,7 @@ h1 {
   flex-direction: column;
   justify-content: center;
   transition: all 0.3s ease;
+  color: var(--text-on-primary);
 }
 
 .timer-display.break-phase {
@@ -471,6 +496,7 @@ h1 {
   text-align: left;
   font-size: clamp(1.25rem, 3vw, 2rem);
   font-weight: 700;
+  color: var(--text-on-primary);
 }
 
 .phase-label {
@@ -479,12 +505,14 @@ h1 {
   font-weight: 600;
   opacity: 0.85;
   letter-spacing: 1px;
+  color: var(--text-on-primary);
 }
 
 .round-info {
   text-align: right;
   font-size: clamp(1.25rem, 3vw, 2rem);
   font-weight: 600;
+  color: var(--text-on-primary);
 }
 
 .countdown-container {
@@ -530,6 +558,7 @@ h1 {
   max-width: 264px;
   text-align: center;
   transition: color 0.3s ease;
+  color: var(--text-on-primary);
 }
 
 .countdown-number.break {

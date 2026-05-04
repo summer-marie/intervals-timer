@@ -128,9 +128,7 @@ const colors = [
   { id: 'pastel-blue', name: 'Pastel Blue', primary: '#6aafd6', secondary: '#a8cfe8' },
   { id: 'pastel-grey', name: 'Soft Grey', primary: '#9eaab5', secondary: '#c8d3da' },
   { id: 'pastel-cream', name: 'Off White', primary: '#c8bfa8', secondary: '#e8e0d0' },
-  { id: 'chrome-red', name: 'Chrome Red', primary: '#c0392b', secondary: '#922b21' },
-  { id: 'chrome-slate', name: 'Chrome Slate', primary: '#5d6d7e', secondary: '#2e4057' },
-  { id: 'chrome-purple', name: 'Chrome Purple', primary: '#7d3c98', secondary: '#4a235a' }
+  { id: 'pastel-purple', name: 'Pastel Purple', primary: '#c084fc', secondary: '#4c1d7a' }
 ];
 
 const motivationalMessages = [
@@ -631,6 +629,11 @@ function renderColors() {
       state.currentColor = color;
       document.documentElement.style.setProperty('--primary-color', color.primary);
       document.documentElement.style.setProperty('--secondary-color', color.secondary);
+      
+      const lightPresets = ['pastel-green', 'pastel-blue', 'pastel-grey', 'pastel-cream', 'pastel-purple'];
+      const isLight = lightPresets.includes(color.id);
+      document.documentElement.style.setProperty('--text-on-primary', isLight ? '#1a1a1a' : '#ffffff');
+      
       renderColors();
     });
 
@@ -725,6 +728,11 @@ function init() {
   renderColors();
   updateSettingsInputs();
   showSettingsPanel();
+  
+  // Set initial text-on-primary based on default color
+  const lightPresets = ['pastel-green', 'pastel-blue', 'pastel-grey', 'pastel-cream', 'pastel-purple'];
+  const isLight = lightPresets.includes(state.currentColor.id);
+  document.documentElement.style.setProperty('--text-on-primary', isLight ? '#1a1a1a' : '#ffffff');
   
   // Load voices for speech synthesis
   if (window.speechSynthesis) {
