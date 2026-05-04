@@ -1,198 +1,146 @@
-# Intervals Timer
+# HIIT Intervals Timer ⏱️
 
-A customizable workout timer application built with React and Vite, featuring dynamic backgrounds and color schemes for an engaging workout experience.
+A fully self-contained, static HIIT (High-Intensity Interval Training) timer built with pure HTML, CSS, and vanilla JavaScript. No build tools, no dependencies, no backend — just open and use!
 
-## Features
+## 🚀 Live Demo
 
-- ⏱️ **Flexible Timer System**: Configure rounds, sets, and break durations
-- 🎨 **Dynamic Backgrounds**: 8 Hero Pattern backgrounds with real-time color customization
-- 🌈 **Color Schemes**: 8 predefined color palettes that dynamically change background patterns
-- 📱 **Responsive Design**: Works seamlessly on desktop and mobile devices
-- 🎯 **Workout Tracking**: Visual progress tracking through sets and rounds
-- ⏸️ **Timer Controls**: Pause, resume, and stop functionality
+**Access the timer here:** [https://summer-marie.github.io/intervals-timer/](https://summer-marie.github.io/intervals-timer/)
 
-## Tech Stack
+Simply open `index.html` in any modern browser or deploy to GitHub Pages for instant access anywhere.
 
-- **Frontend Framework**: React 18+ with Hooks
-- **Build Tool**: Vite
-- **Styling**: Tailwind CSS
-- **Patterns**: Hero Patterns (SVG-based backgrounds)
-- **State Management**: React useState and useEffect
+## ✨ Features
 
-## Prerequisites
+### Core Functionality
+- **Customizable Workouts**: Configure rounds, sets, work/rest intervals to match your training needs
+- **Full-Screen Timer Display**: Giant countdown numbers optimized for visibility during intense workouts
+- **Smart Phase Tracking**: Automatically transitions between work time, round breaks, and set breaks
+- **Visual & Audio Cues**: 
+  - Circular progress ring that drains with each interval
+  - Round progress dots showing completed/current/upcoming rounds
+  - Web Audio API beeps (no audio files needed):
+    - High beep when rounds start
+    - Double beep for breaks
+    - 3-2-1 countdown beeps in final seconds
+    - Completion melody when workout finishes
+  - Color-coded phases (teal for work, red for breaks)
 
-Before running this project, make sure you have the following installed:
+### Preset Workouts
+Choose from popular HIIT formats or create your own:
 
-- **Node.js** (version 16.0 or higher)
-- **npm** (version 7.0 or higher) or **yarn**
+- **Tabata Classic**: 8 rounds × 20s work / 10s rest, 1 set  
+  *The original Tabata protocol for maximum intensity*
 
-You can check your versions by running:
-```bash
-node --version
-npm --version
-```
+- **AMRAP Intervals**: 10 rounds × 40s work / 20s rest, 3 sets, 60s set break  
+  *As Many Rounds As Possible - endurance-focused*
 
-## Installation & Setup
+- **Pyramid**: 5 rounds × 30s work / 15s rest, 3 sets, 45s set break  
+  *Balanced intensity with moderate recovery*
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/summer-marie/intervals-timer.git
-   cd intervals-timer
-   ```
+- **Endurance Block**: 6 rounds × 45s work / 15s rest, 4 sets, 90s set break  
+  *Longer work intervals for building stamina*
 
-2. **Navigate to the client directory**
-   ```bash
-   cd client
-   ```
+- **Sprint Intervals**: 10 rounds × 15s work / 45s rest, 3 sets, 60s set break  
+  *Short bursts with extended recovery*
 
-3. **Install dependencies**
-   ```bash
-   npm install
-   ```
+- **Custom**: Design your own workout from scratch
 
-4. **Start the development server**
-   ```bash
-   npm run dev
-   ```
+### Workout Summary
+Upon completion, view:
+- Total workout time
+- Total rounds completed
+- Number of sets finished
+- Randomized motivational messages
 
-5. **Open your browser**
-   - The app will be available at `http://localhost:3000`
-   - For mobile testing, use the network URL shown in the terminal (e.g., `http://192.168.1.x:3000`)
+### Customization
+- **8 Background Patterns**: Geometric CSS patterns (temple, circuit board, moroccan, etc.)
+- **8 Color Themes**: From dark gray to vibrant teal, purple, crimson, and more
+- **Sound Toggle**: Mute/unmute audio cues with one tap
 
-## Available Scripts
+### Mobile-Optimized
+- Responsive design works on phones, tablets, and desktops
+- Large tap targets (≥ 44px) for easy control during workouts
+- Countdown numbers scale beautifully on any screen size
 
-In the client directory, you can run:
+## 🎯 How to Use
 
-- **`npm run dev`** - Starts the development server with hot reload
-- **`npm run build`** - Builds the app for production
-- **`npm run preview`** - Preview the production build locally
-- **`npm run lint`** - Run ESLint to check code quality
+1. **Choose a Preset** or select "Custom" to configure your own workout
+2. **Adjust Settings** (if needed):
+   - Round Count: 1-99 rounds per set
+   - Round Duration: 10s to 2 minutes
+   - Break Between Rounds: None to 60s
+   - Number of Sets: 1-8
+   - Break Between Sets: None to 2 minutes
+3. **Customize Look** (optional):
+   - Click "Backgrounds" to choose a pattern
+   - Click "Colors" to select a color theme
+4. **Start Timer** and get moving!
+5. **Pause/Resume/Stop** as needed during your workout
 
-## Project Structure
+## 🛠️ Technical Details
+
+- **Zero Dependencies**: No npm, no Node.js, no build process
+- **Single File**: Entire app in one `index.html` file (~30KB)
+- **GitHub Pages Ready**: Deploy by simply enabling Pages on your repo
+- **Modern Web Standards**:
+  - CSS Grid & Flexbox for layout
+  - CSS Custom Properties for theming
+  - Web Audio API for sound generation
+  - SVG for animated countdown ring
+  - Responsive design with CSS clamp() and viewport units
+
+## 📦 Deployment to GitHub Pages
+
+1. Push this repository to GitHub
+2. Go to **Settings** → **Pages**
+3. Under **Source**, select **Deploy from a branch**
+4. Choose **main** branch and **/ (root)** folder
+5. Click **Save**
+6. Your timer will be live at `https://[your-username].github.io/intervals-timer/`
+
+## 🎨 Customization
+
+All styles and logic are contained in `index.html`. To customize:
+
+- **Colors**: Modify CSS custom properties in the `:root` section
+- **Fonts**: Change the Google Fonts link (currently using "Rajdhani")
+- **Background Patterns**: Edit the `.hero-pattern-*` classes
+- **Presets**: Update the `presets` array in the JavaScript section
+- **Audio**: Adjust frequency/duration in the `playBeep()` function
+
+## 🏋️ Perfect For
+
+- HIIT workouts
+- Tabata training
+- Boxing/MMA rounds
+- Circuit training
+- Yoga/meditation intervals
+- Classroom timing activities
+- Cooking timers
+- Productivity techniques (Pomodoro variations)
+
+## 📁 Project Structure
 
 ```
 intervals-timer/
-├── client/
-│   ├── public/
+├── index.html              # The complete standalone app
+├── client/                 # Legacy React version (optional)
 │   ├── src/
-│   │   ├── components/
-│   │   │   ├── BgOptions.jsx      # Background pattern selector
-│   │   │   └── ColorOptions.jsx   # Color scheme selector
-│   │   ├── App.jsx                # Main application component
-│   │   ├── App.css                # Hero Patterns and CSS variables
-│   │   ├── index.css              # Global styles and Tailwind imports
-│   │   └── main.jsx               # React DOM render entry point
-│   ├── package.json
-│   ├── vite.config.js
-│   └── tailwind.config.js
-└── README.md
+│   │   ├── App.jsx
+│   │   └── components/
+│   └── package.json
+└── README.md              # This file
 ```
 
-## Configuration
+**Note**: The `/client` folder contains the original React + Vite version. The new `index.html` at the root is the static, zero-dependency version optimized for GitHub Pages.
 
-### Background Patterns
-The app includes 8 background patterns from Hero Patterns:
-- 4-Point Stars
-- Temple
-- Bubbles
-- Moroccan
-- Circuit Board
-- Slanted Stars
-- Curtain
-- Glamorous
+## 📄 License
 
-### Color Schemes
-8 predefined color schemes that dynamically change pattern colors:
-- Dark Gray
-- Teal Blue
-- Purple Night
-- Forest Green
-- Crimson Red
-- Midnight Blue
-- Amber Gold
-- Rose Pink
+Free to use and modify. No attribution required.
 
-### Timer Settings
-- **Round Duration**: 10, 15, 30, or 60 seconds
-- **Round Count**: 1-99 rounds per set
-- **Sets**: 1-8 sets total
-- **Break Between Rounds**: 0-60 seconds (5-second increments)
-- **Break Between Sets**: 0-60 seconds
+## 🙏 Credits
 
-## Mobile Testing
-
-### Using Chrome DevTools
-1. Open the app in Chrome
-2. Press `F12` and click the device icon (📱)
-3. Select different phone models to test responsiveness
-
-### Testing on Your Phone
-1. Start the dev server: `npm run dev`
-2. Note the network URL (e.g., `http://192.168.1.x:3000`)
-3. Open that URL in your phone's browser
-4. No app installation required!
-
-## Customization
-
-### Adding New Background Patterns
-1. Add the CSS pattern to `src/App.css`
-2. Update the `backgroundOptions` array in `src/components/BgOptions.jsx`
-3. Include a preview SVG path for the tile
-
-### Adding New Color Schemes
-1. Add the color scheme object to `colorSchemes` array in `src/components/ColorOptions.jsx`
-2. Include `primary` and `secondary` color values
-
-### Modifying Timer Options
-- Update dropdown options in `src/App.jsx`
-- Modify the `Array.from()` generators for break duration options
-
-## Production Build
-
-To create a production build:
-
-```bash
-npm run build
-```
-
-The built files will be in the `dist/` directory, ready for deployment to any static hosting service.
-
-## Deployment
-
-This app can be deployed to:
-- **Vercel**: Connect your GitHub repo for automatic deployments
-- **Netlify**: Drag and drop the `dist/` folder or connect via Git
-- **GitHub Pages**: Use GitHub Actions to build and deploy
-- **Any static hosting service**: Upload the contents of `dist/`
-
-## Browser Support
-
-- Chrome (recommended)
-- Firefox
-- Safari
-- Edge
-- Mobile browsers (iOS Safari, Chrome Mobile, etc.)
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Commit your changes: `git commit -m 'Add feature'`
-4. Push to the branch: `git push origin feature-name`
-5. Submit a pull request
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## Support
-
-If you encounter any issues or have questions:
-1. Check the browser console for error messages
-2. Ensure all dependencies are installed correctly
-3. Verify Node.js and npm versions meet requirements
-4. Try clearing browser cache and restarting the dev server
+Built with ❤️ for the fitness community. Background patterns inspired by [Hero Patterns](https://heropatterns.com/).
 
 ---
 
-**Happy Training! 🏋️‍♀️**
+**Get started now:** Open `index.html` in your browser or visit the [live demo](https://summer-marie.github.io/intervals-timer/)!

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HIIT Intervals Timer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container hero-pattern-temple" id="appContainer">
+    <!-- Mute Toggle -->
+    <button class="mute-toggle" id="muteToggle" aria-label="Toggle sound">🔊</button>
+
+    <!-- Background Selector Button -->
+    <button class="selector-btn bg-selector-btn" id="bgSelectorBtn">🎨 Background</button>
+    <button class="selector-btn color-selector-btn" id="colorSelectorBtn">🌈 Color</button>
+
+    <!-- Background Selector Panel -->
+    <div class="selector-panel left" id="bgPanel">
+      <h2>Background</h2>
+      <div class="option-grid" id="bgOptions"></div>
+    </div>
+
+    <!-- Color Selector Panel -->
+    <div class="selector-panel right" id="colorPanel">
+      <h2>Color Theme</h2>
+      <div class="option-grid" id="colorOptions"></div>
+    </div>
+
+    <div class="main-content">
+      <h1>HIIT INTERVALS TIMER</h1>
+
+      <!-- Preset Workout Selection -->
+      <div class="preset-section" id="presetSection">
+        <h2>Choose Your Workout</h2>
+        <div class="preset-grid" id="presetGrid"></div>
+      </div>
+
+      <!-- Settings Panel -->
+      <div class="settings-panel" id="settingsPanel">
+        <h2>Customize Settings</h2>
+        
+        <div class="input-row">
+          <div class="input-group">
+            <label for="roundCount">Rounds per Set</label>
+            <input type="number" id="roundCount" min="1" max="99" value="1" />
+          </div>
+          <div class="input-group">
+            <label for="roundDuration">Work Duration (s)</label>
+            <input type="number" id="roundDuration" min="1" value="30" />
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div class="input-group">
+            <label for="roundBreakDuration">Round Break (s)</label>
+            <input type="number" id="roundBreakDuration" min="0" value="0" />
+          </div>
+          <div class="input-group">
+            <label for="sets">Total Sets</label>
+            <input type="number" id="sets" min="1" value="3" />
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div class="input-group full">
+            <label for="breakDuration">Set Break (s)</label>
+            <input type="number" id="breakDuration" min="0" value="30" />
+          </div>
+        </div>
+
+        <button class="start-btn" id="startBtn">START WORKOUT</button>
+      </div>
+
+      <!-- Timer Display -->
+      <div class="timer-display hidden" id="timerDisplay">
+        <div class="timer-header">
+          <div class="set-info" id="setInfo">Set 1 of 1</div>
+          <div class="phase-label" id="phaseLabel">Work Time</div>
+          <div class="round-info" id="roundInfo">Round 1 of 1</div>
+        </div>
+
+        <div class="countdown-container">
+          <svg class="countdown-ring" width="320" height="320">
+            <circle class="countdown-ring-bg" cx="160" cy="160" r="140"></circle>
+            <circle class="countdown-ring-progress" id="countdownProgress" cx="160" cy="160" r="140"></circle>
+          </svg>
+          <div class="countdown-number" id="countdownNumber">00</div>
+        </div>
+
+        <div class="progress-dots" id="progressDots"></div>
+
+        <div class="timer-controls">
+          <button class="control-btn pause-btn" id="pauseBtn">PAUSE</button>
+          <button class="control-btn resume-btn hidden" id="resumeBtn">RESUME</button>
+          <button class="control-btn stop-btn" id="stopBtn">STOP</button>
+        </div>
+      </div>
+
+      <!-- Completion Screen -->
+      <div class="completion-screen hidden" id="completionScreen">
+        <div class="completion-emoji">🎉</div>
+        <h2>Workout Complete!</h2>
+        <p class="completion-message" id="completionMessage">You absolutely crushed it! 💪</p>
+        
+        <div class="workout-summary">
+          <div class="summary-item">
+            <span class="summary-label">Total Time:</span>
+            <span class="summary-value" id="totalTime">0:00</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Total Rounds:</span>
+            <span class="summary-value" id="totalRounds">0</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Sets Completed:</span>
+            <span class="summary-value" id="setsCompleted">0</span>
+          </div>
+        </div>
+
+        <button class="new-workout-btn" id="newWorkoutBtn">NEW WORKOUT</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
