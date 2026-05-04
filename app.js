@@ -754,3 +754,12 @@ window.addEventListener('beforeunload', () => {
 });
 
 init();
+
+// ===== SERVICE WORKER REGISTRATION =====
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/intervals-timer/sw.js')
+      .then((reg) => console.log('Service worker registered:', reg.scope))
+      .catch((err) => console.warn('Service worker registration failed:', err));
+  });
+}
